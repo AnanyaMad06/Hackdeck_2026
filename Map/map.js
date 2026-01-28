@@ -96,4 +96,12 @@ const initMap = async () => {
 };
 
 // =================== Run ===================
-initMap();
+// =================== Run ===================
+initMap(); // initial load
+
+setInterval(() => {
+  
+    document.getElementById("map").innerHTML = "";
+    initMap();
+}, 2000);
+
