@@ -11,11 +11,13 @@ function Navbar() {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/contact">Contact</Link></li>
+        <li><Link to="/admindashboard">Admin Dashboard</Link></li>
+        <li><Link to="/userdashboard">User Dashboard</Link></li>
       </ul>
 
       <div className="auth-buttons">
-        <Link to="/login" className="btn login">Login</Link>
-        <Link to="/signup" className="btn signup">Sign Up</Link>
+        <Link to="/login" className="btn login"> User Login</Link>
+        <Link to="/signup" className="btn signup">Admin Login</Link>
       </div>
     </nav>
   );

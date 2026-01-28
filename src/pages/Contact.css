@@ -1,0 +1,137 @@
+.contact-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #1f2937;
+}
+
+.contact-container h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #1D4ED8;
+}
+
+.contact-container .intro {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 18px;
+  color: #4b5563;
+}
+
+/* Section Styles */
+.contact-section {
+  margin-bottom: 50px;
+}
+
+.contact-section h2 {
+  font-size: 28px;
+  color: #1D4ED8;
+  border-bottom: 3px solid #3b82f6;
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+/* Helpline Cards */
+.contact-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  flex: 1 1 250px;
+  padding: 20px;
+  background-color: #eff6ff;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #1e40af;
+}
+
+.card .number {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #2563eb;
+}
+
+/* Rules List */
+.contact-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  line-height: 1.7;
+  color: #374151;
+}
+
+/* Contact Info Grid */
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.contact-info div {
+  flex: 1 1 250px;
+  background-color: #e0f2fe;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* Social Media */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.icon {
+  padding: 10px 15px;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  background-color: #1d4ed8;
+}
+
+/* Map Placeholder */
+.map-placeholder {
+  margin-top: 20px;
+  height: 300px;
+  background-color: #e0e7ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.map-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}
+
+.map-container {
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
