@@ -62,7 +62,7 @@ def alert():
 def alerts():
     cursor = get_db().cursor()
     cursor.execute("SELECT message, zone_id FROM alerts;")
-    alerts = list(map(lambda e: {"description": e[0], "zone": e[1]}, cursor.fetchall()))
+    alerts = list(map(lambda e: {"message": e[0], "zone": e[1]}, cursor.fetchall()))
     cursor.close()
 
     return jsonify(alerts)

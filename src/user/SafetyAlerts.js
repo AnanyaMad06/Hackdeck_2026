@@ -29,7 +29,7 @@ function SafetyAlerts() {
         <ul>
           {alerts.map((alert, index) => (
             <li key={index}>
-              ⚠ {alert.message}
+              {alert.message}
             </li>
           ))}
         </ul>
