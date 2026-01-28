@@ -56,7 +56,7 @@ function AlertArea() {
           <option value="">-- Select Zone --</option>
           {zones.map((item) => (
             <option key={item.zone} value={item.zone}>
-              Zone {item.zone} – {item.name}
+              Zone {item.zone + 1} – {item.name}
             </option>
           ))}
         </select>
