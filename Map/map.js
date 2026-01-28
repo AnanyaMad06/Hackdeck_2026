@@ -96,7 +96,6 @@ const initMap = async () => {
 };
 
 // =================== Run ===================
-// =================== Run ===================
 initMap(); // initial load
 
 setInterval(() => {
@@ -104,4 +103,5 @@ setInterval(() => {
     document.getElementById("map").innerHTML = "";
     initMap();
 }, 2000);
+
 
