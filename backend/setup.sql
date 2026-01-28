@@ -5,7 +5,9 @@ CREATE TABLE zones (
 ) WITHOUT ROWID;
 
 CREATE TABLE crimes (
-    description TEXT
+    id INTEGER PRIMARY KEY,
+    description TEXT NOT NULL,
+    datetime TEXT NOT NULL
 );
 
 INSERT INTO zones (id, crime_count, crime_intensity) VALUES (0, 0, 0);

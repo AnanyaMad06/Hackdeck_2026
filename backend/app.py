@@ -43,8 +43,8 @@ def teardown(_exception):
 @app.route("/api/firs.json", methods=["GET"])
 def firs():
     cursor = get_db().cursor()
-    cursor.execute("SELECT description FROM crimes;")
-    stats = list(map(lambda e: e[0], cursor.fetchall()))
+    cursor.execute("SELECT id, description, DATETIME(datetime, 'localtime') FROM crimes;")
+    stats = list(map(lambda e: {"id": e[0], "description": e[1], "timestamp": e[2]}, cursor.fetchall()))
     cursor.close()
 
     return jsonify(stats)
@@ -68,7 +68,7 @@ def submit_fir():
     db = get_db()
     cursor = db.cursor()
     cursor.execute("UPDATE zones SET crime_count = crime_count + 1, crime_intensity = crime_intensity + ? WHERE id = ?;", (crime_intensity, zone_id,))
-    cursor.execute("INSERT INTO crimes (description) VALUES (?)", (description,))
+    cursor.execute("INSERT INTO crimes (description, datetime) VALUES (?, DATETIME('now'))", (description,))
     db.commit()
     cursor.close()
 
@@ -83,7 +83,7 @@ def suggest_patrol_deployment():
 
     cursor = get_db().cursor()
     cursor.execute("SELECT crime_count, crime_intensity FROM zones ORDER BY id;")
-    crime_intensities = list(map(lambda e: e[0] / e[1], cursor.fetchall()))
+    crime_intensities = list(map(lambda e: e[1] / e[0], cursor.fetchall()))
     cursor.close()
 
     return jsonify(patrol_allocation.allocate(data["total_officers"], crime_intensities, MIN_OFFICERS_PER_ZONE))
