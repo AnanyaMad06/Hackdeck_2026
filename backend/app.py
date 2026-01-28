@@ -39,7 +39,7 @@ def teardown(_exception):
 
     gc.collect()
 
-@app.route("/api/patrol-deployment", methods=["POST"])
+@app.route("/api/suggest-patrol-deployment", methods=["POST"])
 def suggest_patrol_deployment():
     data = request.json
 
@@ -53,7 +53,7 @@ def suggest_patrol_deployment():
 
     return jsonify(patrol_allocation.allocate(data["total_officers"], crime_intensities, MIN_OFFICERS_PER_ZONE))
 
-@app.route("/api/fir", methods=["POST"])
+@app.route("/api/submit-fir", methods=["POST"])
 def submit_fir():
     data = request.json
 
@@ -75,7 +75,7 @@ def submit_fir():
 
     return jsonify({ "crime": crime, "location": location })
 
-@app.route("/api/stats", methods=["GET"])
+@app.route("/api/stats.json", methods=["GET"])
 def stats():
     cursor = get_db().cursor()
     cursor.execute("SELECT crime_intensity FROM zones ORDER BY id;")
