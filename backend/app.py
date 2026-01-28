@@ -3,12 +3,14 @@ import sqlite3
 
 from flask import Flask, jsonify, request
 from flask import g
+from flask_cors import CORS
 
 import information_extraction
 import patrol_allocation
 import zone
 
-app: Flask = Flask(__name__)
+app = Flask(__name__)
+_ = CORS(app)
 
 DATABASE = 'database.db'
 MIN_OFFICERS_PER_ZONE = 5
