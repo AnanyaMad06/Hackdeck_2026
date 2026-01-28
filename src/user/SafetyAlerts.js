@@ -7,7 +7,7 @@ function SafetyAlerts() {
 
   useEffect(() => {
     /* 🔗 API ENDPOINT PLACEHOLDER */
-    fetch("YOUR_API_ENDPOINT_HERE")
+    fetch("http://localhost:5000/api/alerts.json")
       .then((res) => res.json())
       .then((data) => {
         setAlerts(data);

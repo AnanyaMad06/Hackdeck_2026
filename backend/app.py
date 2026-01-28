@@ -110,7 +110,7 @@ def suggest_patrol_deployment():
 
     cursor = get_db().cursor()
     cursor.execute("SELECT crime_count, crime_intensity FROM zones ORDER BY id;")
-    crime_intensities = list(map(lambda e: e[1] / e[0], cursor.fetchall()))
+    crime_intensities = list(map(lambda e: e[1] / (e[0] + 1), cursor.fetchall()))
     cursor.close()
 
     return jsonify(patrol_allocation.allocate(data["total_officers"], crime_intensities, MIN_OFFICERS_PER_ZONE))
