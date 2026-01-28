@@ -19,7 +19,7 @@ function TroopsDeployment() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            totalTroops: Number(totalTroops),
+            total_officers: Number(totalTroops),
           }),
         }
       );
