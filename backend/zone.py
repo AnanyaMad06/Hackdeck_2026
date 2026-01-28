@@ -10,7 +10,7 @@ ZONES = [
     ["goregaon-mulund link road"],
 ]
 
-def find_zone(location: str):
+def find_zone(location):
     location = location.lower()
 
     for index, zone_identifiers in enumerate(ZONES):

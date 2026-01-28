@@ -6,6 +6,7 @@ from flask import g
 from flask_cors import CORS
 
 import information_extraction
+import intensity
 import patrol_allocation
 import zone
 
@@ -39,19 +40,14 @@ def teardown(_exception):
 
     gc.collect()
 
-@app.route("/api/suggest-patrol-deployment", methods=["POST"])
-def suggest_patrol_deployment():
-    data = request.json
-
-    if "total_officers" not in data or not isinstance(data["total_officers"], int):
-        return jsonify({"error": "incorrect payload"}), 400
-
+@app.route("/api/firs.json", methods=["GET"])
+def firs():
     cursor = get_db().cursor()
-    cursor.execute("SELECT crime_intensity FROM zones ORDER BY id;")
-    crime_intensities = list(map(lambda e: e[0], cursor.fetchall()))
+    cursor.execute("SELECT description FROM crimes;")
+    stats = list(map(lambda e: e[0], cursor.fetchall()))
     cursor.close()
 
-    return jsonify(patrol_allocation.allocate(data["total_officers"], crime_intensities, MIN_OFFICERS_PER_ZONE))
+    return jsonify(stats)
 
 @app.route("/api/submit-fir", methods=["POST"])
 def submit_fir():
@@ -60,20 +56,37 @@ def submit_fir():
     if "text" not in data or not isinstance(data["text"], str):
         return jsonify({"error": "incorrect payload"}), 400
 
+    description = data["text"]
     ner = get_ner()
 
-    crime = "".join(map(lambda e: e["word"], filter(lambda e: e["entity_group"] == "CRIME", ner(data["text"]))))
-    location = "".join(map(lambda e: e["word"], filter(lambda e: e["entity_group"] == "LOCATION", ner(data["text"]))))
+    crime = "".join(map(lambda e: e["word"], filter(lambda e: e["entity_group"] == "CRIME", ner(description))))
+    location = "".join(map(lambda e: e["word"], filter(lambda e: e["entity_group"] == "LOCATION", ner(description))))
 
     zone_id = zone.find_zone(location.lower())
+    crime_intensity = intensity.calculate_intensity(crime)
 
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("UPDATE zones SET crime_intensity = crime_intensity + 1 WHERE id = ?;", (zone_id,))
+    cursor.execute("UPDATE zones SET crime_count = crime_count + 1, crime_intensity = crime_intensity + ? WHERE id = ?;", (crime_intensity, zone_id,))
+    cursor.execute("INSERT INTO crimes (description) VALUES (?)", (description,))
     db.commit()
     cursor.close()
 
     return jsonify({ "crime": crime, "location": location })
+
+@app.route("/api/suggest-patrol-deployment", methods=["POST"])
+def suggest_patrol_deployment():
+    data = request.json
+
+    if "total_officers" not in data or not isinstance(data["total_officers"], int):
+        return jsonify({"error": "incorrect payload"}), 400
+
+    cursor = get_db().cursor()
+    cursor.execute("SELECT crime_count, crime_intensity FROM zones ORDER BY id;")
+    crime_intensities = list(map(lambda e: e[0] / e[1], cursor.fetchall()))
+    cursor.close()
+
+    return jsonify(patrol_allocation.allocate(data["total_officers"], crime_intensities, MIN_OFFICERS_PER_ZONE))
 
 @app.route("/api/stats.json", methods=["GET"])
 def stats():
