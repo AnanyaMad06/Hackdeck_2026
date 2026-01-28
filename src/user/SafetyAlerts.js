@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import "./SafetyAlerts.css";
 
 function SafetyAlerts() {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/alerts.json")
+    /* 🔗 API ENDPOINT PLACEHOLDER */
+    fetch("YOUR_API_ENDPOINT_HERE")
       .then((res) => res.json())
       .then((data) => {
         setAlerts(data);
@@ -18,23 +20,26 @@ function SafetyAlerts() {
   }, []);
 
   return (
-    <>
-      <h2>🚨 Safety Alerts</h2>
+    <div className="safety-container">
+      <h2 className="safety-title">🚨 Safety Alerts</h2>
 
       {loading ? (
-        <p>Loading alerts...</p>
+        <p className="loading">Loading alerts...</p>
       ) : alerts.length === 0 ? (
-        <p>No active safety alerts</p>
+        <p className="no-alerts">No active safety alerts</p>
       ) : (
-        <ul>
+        <div className="alert-grid">
           {alerts.map((alert, index) => (
-            <li key={index}>
-              ⚠ {alert.message}
-            </li>
+            <div key={index} className="alert-card">
+              <div className="alert-icon">⚠</div>
+              <div className="alert-content">
+                <p>{alert.message}</p>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
