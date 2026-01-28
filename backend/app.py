@@ -40,14 +40,41 @@ def teardown(_exception):
 
     gc.collect()
 
+@app.route("/api/alert", methods=["POST"])
+def alert():
+    data = request.json
+    print(data)
+
+    if "zone" not in data or not isinstance(data["zone"], int) or "message" not in data or not isinstance(data["message"], str):
+        return jsonify({"error": "incorrect payload"}), 400
+
+    message = data["message"]
+
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO alerts (message, zone_id) VALUES (?, ?)", (message, data["zone"]))
+    db.commit()
+    cursor.close()
+
+    return jsonify({"status": "ok"})
+
+@app.route("/api/alerts.json", methods=["GET"])
+def alerts():
+    cursor = get_db().cursor()
+    cursor.execute("SELECT message, zone_id FROM alerts;")
+    alerts = list(map(lambda e: {"description": e[0], "zone": e[1]}, cursor.fetchall()))
+    cursor.close()
+
+    return jsonify(alerts)
+
 @app.route("/api/firs.json", methods=["GET"])
 def firs():
     cursor = get_db().cursor()
     cursor.execute("SELECT id, description, DATETIME(datetime, 'localtime') FROM crimes;")
-    stats = list(map(lambda e: {"id": e[0], "description": e[1], "timestamp": e[2]}, cursor.fetchall()))
+    firs = list(map(lambda e: {"id": e[0], "description": e[1], "timestamp": e[2]}, cursor.fetchall()))
     cursor.close()
 
-    return jsonify(stats)
+    return jsonify(firs)
 
 @app.route("/api/submit-fir", methods=["POST"])
 def submit_fir():

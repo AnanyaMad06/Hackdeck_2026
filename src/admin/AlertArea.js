@@ -5,32 +5,32 @@ import React, { useState } from "react";
  * zone number is what will be sent to API
  */
 const zones = [
-  { zone: 1, name: "Jawahar Nagar & City Centre" },
-  { zone: 2, name: "Best Nagar & Motilal Nagar" },
-  { zone: 3, name: "Bangur Nagar & Link Road" },
-  { zone: 4, name: "Aarey Colony" },
-  { zone: 5, name: "Film City & IT Parks" },
-  { zone: 6, name: "Gokuldham & Yashodham" },
-  { zone: 7, name: "Dindoshi & Nagari Niwas" },
-  { zone: 8, name: "Oshiwara District Centre (ODC)" },
-  { zone: 9, name: "Goregaon–Mulund Link Road" },
+  { zone: 0, name: "Jawahar Nagar & City Centre" },
+  { zone: 1, name: "Best Nagar & Motilal Nagar" },
+  { zone: 2, name: "Bangur Nagar & Link Road" },
+  { zone: 3, name: "Aarey Colony" },
+  { zone: 4, name: "Film City & IT Parks" },
+  { zone: 5, name: "Gokuldham & Yashodham" },
+  { zone: 6, name: "Dindoshi & Nagari Niwas" },
+  { zone: 7, name: "Oshiwara District Centre (ODC)" },
+  { zone: 8, name: "Goregaon–Mulund Link Road" },
 ];
 
 function AlertArea() {
-  const [zone, setZone] = useState("");
+  const [zone, setZone] = useState(0);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
-      zoneNumber: zone,
+      zone: zone,
       message: message,
     };
 
     console.log("Payload to send:", payload);
 
-    await fetch("localhost:5000/api/alert", {
+    await fetch("http://localhost:5000/api/alert", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ function AlertArea() {
         <label>Select Area (Zone)</label>
         <select
           value={zone}
-          onChange={(e) => setZone(e.target.value)}
+          onChange={(e) => setZone(Number(e.target.value)) }
           required
         >
           <option value="">-- Select Zone --</option>

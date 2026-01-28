@@ -1,8 +1,13 @@
+CREATE TABLE alerts (
+    message TEXT NOT NULL,
+    zone_id INTEGER NOT NULL
+);
+
 CREATE TABLE zones (
     id INTEGER PRIMARY KEY,
     crime_count INTEGER,
     crime_intensity INTEGER
-) WITHOUT ROWID;
+);
 
 CREATE TABLE crimes (
     id INTEGER PRIMARY KEY,

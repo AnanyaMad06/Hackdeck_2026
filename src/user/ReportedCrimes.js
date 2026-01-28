@@ -20,24 +20,12 @@ function ReportedCrimes() {
   }, []);
 
   const formatDateTime = (timestamp) => {
-    const dateObj = new Date(timestamp * 1000); // unix → ms
-
-    const date = dateObj.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-
-    const time = dateObj.toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
+    const [date, time] = timestamp.split(' ');
     return { date, time };
   };
 
   const filteredReports = reports.filter((report) =>
-    report.content.toLowerCase().includes(search.toLowerCase())
+    report.description.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -66,7 +54,7 @@ function ReportedCrimes() {
                 <span>{date}</span>
                 <span>{time}</span>
               </div>
-              <p className="news-content">{report.content}</p>
+              <p className="news-content">{report.description}</p>
             </div>
           );
         })
