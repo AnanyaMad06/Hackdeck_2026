@@ -30,12 +30,18 @@ function SafetyAlerts() {
       ) : (
         <div className="alert-grid">
           {alerts.map((alert, index) => (
+<<<<<<< HEAD
             <div key={index} className="alert-card">
               <div className="alert-icon">⚠</div>
               <div className="alert-content">
                 <p>{alert.message}</p>
               </div>
             </div>
+=======
+            <li key={index}>
+              {alert.message}
+            </li>
+>>>>>>> e4e2516afbd4de6e70f70280e3b0db72d61f0227
           ))}
         </div>
       )}
