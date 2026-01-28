@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from transformers import (
     AutoTokenizer,
     AutoModelForTokenClassification,
@@ -7,7 +8,6 @@ from transformers import (
 
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "fine-tuned-model"
-
 
 def build_pipeline():
 
